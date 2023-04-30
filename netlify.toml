@@ -1,0 +1,8 @@
+[build]
+  command = "./run.sh"
+  functions = "functions"
+  publish = "public"
+
+[build.environment]
+  GO_IMPORT_PATH = "github.com/bertoxic/gome"
+  GO111MODULE = "on"

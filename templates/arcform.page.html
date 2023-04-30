@@ -1,0 +1,125 @@
+{{template "base" .}}
+
+{{define "content"}}
+<div class="container">
+    <form method="POST"action ="/arcform">
+        <br>
+        <div> 
+        <div>  <strong>Welcome to Aarc gadgets website</strong> </div>
+        <div> Select the purpose and specificaations of the laptop you want and one will be recommended for you</strong> </div>
+       </div>
+       <br>
+       <br>
+        <div> <strong>PURPOSE</strong> </div>
+        <div class="form">
+            <label for="system_use"> What purpose do you need to use the system for </label>
+            <select class="form-select" name="system_use" id="systemuse" aria-label="Floating label select example">
+                <option selected></option>
+                <option value="Programming">Programming</option>
+                <option value="gaming">gaming</option>
+                <option value="graphic_design">graphic design</option>
+                <option value="writing_meetings">writing meetings</option>
+            </select>
+        </div>
+        <br>
+        <div> <strong>SPECIFICATIONS</strong> </div>
+        <div class="row">
+            <div class="form col-6">
+                <label for="Screen_type"> Screen size? </label>
+                <select class="form-select" name="Screen_type" id="Screentype" required
+                    aria-label="Floating label select example">
+                    <option selected></option>
+                    <option value="15.6">15 inches</option>
+                    <option value="14">14 inches</option>
+                    <option value="13">13 inches</option>
+                    <option value="12.5">less than 13 inches</option>
+                </select>
+
+            </div>
+            <div class="form col-6">
+                <label for="storage_size"> Storage size? </label>
+                <select class="form-select" name="storage_size" id="storesize"
+                    aria-label="Floating label select example">
+                    <option selected></option>
+                    <option value="1024">1 tera-byte</option>
+                    <option value="512">512gb</option>
+                    <option value="256">256gb </option>
+                    <option value="writing_meetings">128gb</option>
+                </select>
+
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="form col-6">
+                <label for="ram_size"> RAM size? </label>
+                <select class="form-select" name="ram_size" id="ramsize"
+                    aria-label="Floating label select example">
+                    <option selected></option>
+                    <option value="4">4gb </option>
+                    <option value="8">8gb </option>
+                    <option value="12">12gb </option>
+                    <option value="16">16gb </option>
+                    <option value="32">32gb</option>
+                </select>
+
+            </div>
+            <div class="form col-6">
+                <label for="cpu">  Cpu? </label>
+                <select class="form-select" name="cpu" id="cpu"
+                    aria-label="Floating label select example">
+                    <option selected></option>
+                    <option value="3">i3</option>
+                    <option value="5">i5</option>
+                    <option value="7">i7 </option>
+                    <option value="9">i9</option>
+                </select>
+
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="form col-6">
+                <label for="gen"> Generation? </label>
+                <select class="form-select" name="gen" id="Generation"
+                    aria-label="Floating label select example">
+                    <option selected></option>
+                    <option value="4">4th</option>
+                    <option value="5">5th </option>
+                    <option value="6">6th </option>
+                    <option value="7">7th </option>
+                    <option value="8">8th</option>
+                    <option value="10">10th</option>
+                    <option value="11">11th</option>
+                    <option value="12">12th</option>
+                </select>
+
+            </div>
+            <div class="form col-6">
+                <label for="system_use"> Screen Resolution</label>
+                <select class="form-select" name="cpu" id="storage_size"
+                    aria-label="Floating label select example">
+                    <option selected></option>
+                    <option value="3">720p</option>
+                    <option value="5">1080p (FullHD)</option>
+                    <option value="7">4k</option>
+                </select>
+
+            </div>
+        </div>
+        <label for="txt">some text</label>
+        <input type="text" name="txt" id="txt">
+        <br>
+        <input class="btn btn-success" type="submit" value="Submit">
+
+    </form>
+
+</div>
+
+{{end}}
+
+
+
+{{define "js"}}
+
+{{end}}

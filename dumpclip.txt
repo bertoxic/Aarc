@@ -1,0 +1,58 @@
+func sendVerificationEmail(user models.User) error {
+	// Set up the SMTP server credentials and message content
+	from := mail.Address{Name: "MyApp Support", Address: "support@myapp.com"}
+	to := mail.Address{Name: "", Address: user.Email}
+	subject := "Verify your account on MyApp"
+	body := fmt.Sprintf("Dear %s,\n\n"+
+		"Thank you for registering on MyApp. Please click the following link to verify your account:\n\n"+
+		"http://myapp.com/verify/%s\n\n"+
+		"Best regards,\n"+
+		"MyApp Support",
+		user.Email, user.Verification)
+
+	// Create the SMTP client
+	client, err := smtp.Dial("smtp.gmail.com:587")
+	if err != nil {
+		return err
+	}
+	defer client.Close()
+
+	// Authenticate with the SMTP server
+	err = client.Auth(smtp.PlainAuth("", "support@myapp.com", "password123", "smtp.gmail.com"))
+	if err != nil {
+		return err
+	}
+
+	// Set up the message content and send the email
+	err = client.Mail(from.Address)
+	if err != nil {
+		return err
+	}
+
+	err = client.Rcpt(to.Address)
+	if err != nil {
+		return err
+	}
+
+	message := fmt.Sprintf("From: %s\r\n"+
+		"To: %s\r\n"+
+		"Subject: %s\r\n\r\n"+
+		"%s\r\n", from.String(), to.String(), subject, body)
+
+	w, err := client.Data()
+	if err != nil {
+		return err
+	}
+
+	_, err = w.Write([]byte(message))
+	if err != nil {
+		return err
+	}
+
+	err = w.Close()
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

@@ -2,6 +2,7 @@ package main
 
 import (
 	//"flag"
+	"encoding/gob"
 	"fmt"
 	"log"
 	"net/http"
@@ -26,6 +27,8 @@ var sessions *scs.SessionManager
 const portNumber = ":8087"
 
 func main() {
+	gob.Register(helpers.PcProperties{})
+
 	// dbHost := flag.String("dbhost","localhost","Database Host")
 	// dbName := flag.String("dbname","","Database name")
 	// dbUser := flag.String("dbuser","","Database user")

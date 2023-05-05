@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/bertoxic/aarc/config"
@@ -144,18 +145,16 @@ func (m *Repository) Register (w http.ResponseWriter, r *http.Request){
 		log.Println("moved to verification Page")
 	}
 	http.Redirect(w, r,"/",http.StatusSeeOther)
-
 	
 }
-
+	
 
 
 func (m *Repository) Verify(w http.ResponseWriter, r *http.Request){
 		// state := "hope is all"
 		// a:= []byte(state)
 		// w.Write(a)
-
-
+		
 		
 }
 
@@ -242,25 +241,48 @@ func (m *Repository)PostHome(w http.ResponseWriter, r *http.Request){
 	if err != nil {
 		log.Println(err)
 	}
-	screenType := r.Form.Get("Screen_type")
+	screenSize := r.Form.Get("Screen_size")
 	storageSize := r.Form.Get("storage_size")
-	ramSize := r.Form.Get("gen")
+	gen := r.Form.Get("gen")
+	ram := r.Form.Get("ram_size")
+	cpu := r.Form.Get("cpu")
+	resolution := r.Form.Get("resolution")
+	form := forms.New(r.PostForm)
+	form.Required("Screen_type","storage_size","gen")
+	// if !form.Valid(){
+	// 	log.Println("somee required fields are missing")
+	// 	render.Template(w,r,"arcform.page.html",&models.TemplateData{
+	// 		Form: forms.New(nil),
+	// 	})
+	// }
 
-	log.Println("printing thissssss:",ramSize,storageSize,screenType)
 	
-
-	render.Template(w,r,"arcform.page.html",&models.TemplateData{
-		Form: forms.New(nil),
-	})
+	
+	hp := helpers.NewPC()
+	hp.ScreenSize, _ = strconv.Atoi(screenSize)
+	hp.Gen, _ = strconv.Atoi(gen)
+	hp.StorageSize, _ = strconv.Atoi(storageSize)
+	hp.RamSize, _ = strconv.Atoi(ram)
+	hp.Resolution, _ = strconv.Atoi(resolution)
+	hp.Cpu, _ = strconv.Atoi(cpu)
+	
+	price := hp.EstimatePrice()
+	hp.Price = price
+	log.Println("printing thissssss:",gen,storageSize,price,hp.Gen)
+	m.App.Sessions.Put(r.Context(),"hp",hp)
+	http.Redirect(w,r,"/recommendation",http.StatusSeeOther)
+	log.Println("made to go to recommendations")
+	
 }
 
-func (m *Repository)General(w http.ResponseWriter, r *http.Request){
-	err:=r.ParseForm()
-	if err != nil {
-		log.Println(err)
-	}
-	render.Template(w,r,"generals.page.html",&models.TemplateData{
-		Form: forms.New(nil),
+func (m *Repository)RecommendationPage(w http.ResponseWriter, r *http.Request){
+	retrievedHp:=m.App.Sessions.Get(r.Context(),"hp").(helpers.PcProperties)
+	data := make(map[string]interface{})
+	data["hp"]= retrievedHp
+
+	render.Template(w,r,"generals.page.html",&models.TemplateData {
+		//Form: forms.New(nil),
+		Data: data,
 	})
 }
 

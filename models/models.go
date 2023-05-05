@@ -1,6 +1,8 @@
 package models
 
-import "time"
+import (
+	"time"
+)
 
 type User struct {
 	Name string
@@ -18,4 +20,13 @@ type MailData struct {
 	Subject string
 	Content string
 	Template string
+}
+
+type ComputerData struct {
+	ScreenSize int
+	Cpu int
+	StorageSize int
+	RamSize int
+	Gen int
+	Resolution int
 }

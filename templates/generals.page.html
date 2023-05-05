@@ -1,7 +1,7 @@
 {{template "base" .}}
 
 {{define "content"}}
-
+{{$hp := index .Data "hp"}}
 <div class="container ">
 <div class="gallery">
   <figure class="gallery__item gallery__item--1" style="--cs: 1; --ce: 3; --rs:1; --re: 3">
@@ -32,6 +32,8 @@
 
 
 <h1>General's Quaters</h1>
+ram:<h1>{{$hp.RamSize}} </h1>
+Price:<h1> {{$hp.Price}}</h1>
 </div>
 
 <section class="container home-text" >

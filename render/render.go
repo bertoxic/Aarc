@@ -53,8 +53,8 @@ func Template (w http.ResponseWriter, r *http.Request, tmpl string, td *models.T
         return errors.New("could not get template from cache")
     }
     buf := new(bytes.Buffer)
-	//td = AddDefaultData(td, r)
-    //log.Println("zzzzzz page template",tmpl)
+	td = AddDefaultData(td, r)
+    log.Println("zzzzzz page template",tmpl)
     
 	t.Execute(buf, td)
 	_, err := buf.WriteTo(w)
